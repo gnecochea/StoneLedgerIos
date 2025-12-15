@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="24411" systemVersion="24G325" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithSwiftData="YES" userDefinedModelVersionIdentifier="">
+    <entity name="Client" representedClassName="Client" syncable="YES" codeGenerationType="class">
+        <attribute name="address" optional="YES" attributeType="String"/>
+        <attribute name="businessName" attributeType="String"/>
+        <attribute name="clientId" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="notes" optional="YES" attributeType="String"/>
+        <attribute name="ownerName" optional="YES" attributeType="String"/>
+        <attribute name="phone" optional="YES" attributeType="String"/>
+        <attribute name="sellerPermit" optional="YES" attributeType="String"/>
+        <relationship name="receipts" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Receipt" inverseName="client" inverseEntity="Receipt"/>
+    </entity>
+    <entity name="Item" representedClassName="Item" syncable="YES" codeGenerationType="class">
+        <attribute name="category" optional="YES" attributeType="String"/>
+        <attribute name="categoryEmbedding" optional="YES" attributeType="String"/>
+        <attribute name="imageData" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES"/>
+        <attribute name="imageEmbedding" optional="YES" attributeType="String"/>
+        <attribute name="itemId" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="name" attributeType="String"/>
+        <attribute name="pricePerDozen" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="pricePerPiece" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="pricePerPound" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="textEmbedding" optional="YES" attributeType="String"/>
+        <attribute name="unitType" attributeType="String"/>
+        <relationship name="receiptItems" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ReceiptItem" inverseName="item" inverseEntity="ReceiptItem"/>
+    </entity>
+    <entity name="Receipt" representedClassName="Receipt" syncable="YES" codeGenerationType="class">
+        <attribute name="clientNameBackup" optional="YES" attributeType="String"/>
+        <attribute name="date" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="paymentType" attributeType="String"/>
+        <attribute name="receiptId" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="saleType" attributeType="String"/>
+        <attribute name="status" attributeType="String"/>
+        <attribute name="subtotal" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="tax" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="total" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <relationship name="client" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Client" inverseName="receipts" inverseEntity="Client"/>
+        <relationship name="items" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="ReceiptItem" inverseName="receipt" inverseEntity="ReceiptItem"/>
+    </entity>
+    <entity name="ReceiptItem" representedClassName="ReceiptItem" syncable="YES" codeGenerationType="class">
+        <attribute name="imageData" optional="YES" attributeType="Binary"/>
+        <attribute name="itemNameBackup" optional="YES" attributeType="String"/>
+        <attribute name="priceMode" attributeType="String"/>
+        <attribute name="quantity" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="receiptItemId" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="unitPrice" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <relationship name="item" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Item" inverseName="receiptItems" inverseEntity="Item"/>
+        <relationship name="receipt" maxCount="1" deletionRule="Nullify" destinationEntity="Receipt" inverseName="items" inverseEntity="Receipt"/>
+    </entity>
+</model>
